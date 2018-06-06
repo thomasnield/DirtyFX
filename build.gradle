@@ -1,0 +1,103 @@
+
+buildscript {
+    ext.kotlin_version = '1.2.41'
+
+    repositories {
+            mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+
+apply plugin: 'kotlin'
+apply plugin: 'maven'
+
+repositories {
+    mavenCentral()
+}
+compileKotlin {
+    kotlinOptions.jvmTarget= "1.8"
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'junit:junit:4.12'
+}
+
+
+/*
+group = 'org.ojalgo'
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+group = "org.nield"
+archivesBaseName = "okalgo"
+version = "0.0.2"
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'okAlgo'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'Idiomatic Kotlin extensions for ojAlgo'
+                url 'https://github.com/optimatika/okAlgo'
+
+                scm {
+                    connection 'scm:git:git://github.com/optimatika/okAlgo.git'
+                    developerConnection 'scm:git:git@github.com:optimatika/okAlgo.git'
+                    url 'https://github.com/optimatika/okAlgo'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'http://ojalgo.org/license.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'thomasnield'
+                        name 'Thomas Nield'
+                        email 'thomasnield@live.com'
+                    }
+                }
+            }
+        }
+    }
+}
+*/
