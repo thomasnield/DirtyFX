@@ -2,20 +2,24 @@ package org.nield.dirtyfx.collections
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ObservableValue
-import javafx.collections.*
+import javafx.collections.FXCollections
+import javafx.collections.MapChangeListener
+import javafx.collections.ObservableMap
+import javafx.collections.WeakMapChangeListener
+import org.nield.dirtyfx.tracking.DirtyProperty
 
 class DirtyObservableMap<K,V>(originalMap: Map<K,V> = mapOf()):
-        ObservableMap<K,V> by FXCollections.observableMap(HashMap<K,V>(originalMap)) {
+        ObservableMap<K,V> by FXCollections.observableMap(HashMap<K,V>(originalMap)), DirtyProperty {
 
     private val originalMap = FXCollections.observableMap(HashMap<K,V>(originalMap))
     private val _isDirtyProperty = SimpleBooleanProperty()
 
-    fun rebaseline() {
+    override fun rebaseline() {
         originalMap.clear()
         forEach { k, v -> originalMap[k] = v }
         _isDirtyProperty.set(false)
     }
-    fun reset() {
+    override fun reset() {
         clear()
         originalMap.forEach { k, v -> set(k,v) }
         _isDirtyProperty.set(false)
@@ -29,6 +33,6 @@ class DirtyObservableMap<K,V>(originalMap: Map<K,V> = mapOf()):
                 )
         )
     }
-    fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
-    val isDirty get() = _isDirtyProperty.get()
+    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override val isDirty get() = _isDirtyProperty.get()
 }

@@ -6,19 +6,20 @@ import javafx.collections.FXCollections
 import javafx.collections.ObservableSet
 import javafx.collections.SetChangeListener
 import javafx.collections.WeakSetChangeListener
+import org.nield.dirtyfx.tracking.DirtyProperty
 
 class DirtyObservableSet<T>(originalSet: Set<T> = setOf()):
-        ObservableSet<T> by FXCollections.observableSet(HashSet<T>(originalSet)) {
+        ObservableSet<T> by FXCollections.observableSet(HashSet<T>(originalSet)), DirtyProperty {
 
     private val originalSet = FXCollections.observableSet(HashSet<T>(originalSet))
     private val _isDirtyProperty = SimpleBooleanProperty()
 
-    fun rebaseline() {
+    override fun rebaseline() {
         originalSet.clear()
         originalSet.addAll(this)
         _isDirtyProperty.set(false)
     }
-    fun reset() {
+    override fun reset() {
         clear()
         addAll(originalSet)
         _isDirtyProperty.set(false)
@@ -32,6 +33,6 @@ class DirtyObservableSet<T>(originalSet: Set<T> = setOf()):
                 )
         )
     }
-    fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
-    val isDirty get() = _isDirtyProperty.get()
+    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override val isDirty get() = _isDirtyProperty.get()
 }
