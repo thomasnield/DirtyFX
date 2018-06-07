@@ -28,8 +28,8 @@ dependencies {
 }
 
 
-/*
-group = 'org.ojalgo'
+
+group = 'org.nield'
 
 apply plugin: 'maven'
 apply plugin: 'signing'
@@ -54,8 +54,8 @@ signing {
 }
 
 group = "org.nield"
-archivesBaseName = "okalgo"
-version = "0.0.2"
+archivesBaseName = "dirtyfx"
+version = "0.0.1"
 
 uploadArchives {
     repositories {
@@ -71,22 +71,22 @@ uploadArchives {
             }
 
             pom.project {
-                name 'okAlgo'
+                name 'DirtyFX'
                 packaging 'jar'
                 // optionally artifactId can be defined here
-                description 'Idiomatic Kotlin extensions for ojAlgo'
+                description 'Dirty-tracking properties and collections for JavaFX'
                 url 'https://github.com/optimatika/okAlgo'
 
                 scm {
-                    connection 'scm:git:git://github.com/optimatika/okAlgo.git'
-                    developerConnection 'scm:git:git@github.com:optimatika/okAlgo.git'
-                    url 'https://github.com/optimatika/okAlgo'
+                    connection 'scm:git:git://github.com/thomasnield/DirtyFX.git'
+                    developerConnection 'scm:git:git@github.com:thomasnield/DirtyFX.git'
+                    url 'https://github.com/thomasnield/DirtyFX'
                 }
 
                 licenses {
                     license {
-                        name 'MIT'
-                        url 'http://ojalgo.org/license.txt'
+                        name 'Apache License 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0'
                     }
                 }
                 developers {
@@ -100,4 +100,3 @@ uploadArchives {
         }
     }
 }
-*/
