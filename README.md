@@ -54,3 +54,21 @@ myProperty.reset();
 Assert.assertEquals("World", myProperty.getValue());
 Assert.assertFalse(myProperty.isDirty());
 ```
+
+### Dependecies
+
+**Maven**
+
+```xml 
+<dependency>
+    <groupId>org.nield</groupId>
+    <artifactId>dirtyfx</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+**Gradle**
+
+```groovy
+compile 'org.nield:dirtyfx:0.0.1'
+```
