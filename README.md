@@ -1,7 +1,7 @@
 ![](logo.jpg)
 
 
-### Dirty state tracking properties and collections for JavaFX
+### Dirty state-tracking properties and collections for JavaFX
 
 I built this library out of tremendous need to keep track of dirty states in various JavaFX Properties and Collections, as well as rebaseline and reset against the dirty values.
 
@@ -31,7 +31,7 @@ Each of these dirty-tracking components have the same behaviors as their vanilla
 
 Note this was built in Kotlin, but works with both Java and Kotlin.
 
-### Example
+### Java Example
 
 ```java
 // Initialize with "Hello" being the baseline
@@ -99,12 +99,12 @@ Assert.assertArrayEquals(list1.toArray(), new String[] {"Alpha", "Beta", "Gamma"
 <dependency>
     <groupId>org.nield</groupId>
     <artifactId>dirtyfx</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 
 **Gradle**
 
 ```groovy
-compile 'org.nield:dirtyfx:0.0.1'
+compile 'org.nield:dirtyfx:0.0.2'
 ```
