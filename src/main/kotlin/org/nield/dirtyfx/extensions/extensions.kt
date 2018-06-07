@@ -4,7 +4,7 @@ import org.nield.dirtyfx.tracking.CompositeDirtyProperty
 import org.nield.dirtyfx.tracking.DirtyProperty
 import kotlin.reflect.KProperty
 
-fun DirtyProperty.addTo(compositeDirtyProperty: CompositeDirtyProperty): DirtyProperty {
+fun <P: DirtyProperty> P.addTo(compositeDirtyProperty: CompositeDirtyProperty): P {
     compositeDirtyProperty.add(this)
     return this
 }
