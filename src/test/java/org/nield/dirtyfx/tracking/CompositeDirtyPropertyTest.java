@@ -7,10 +7,10 @@ import org.nield.dirtyfx.collections.DirtyObservableList;
 
 import java.util.Arrays;
 
-public class MutliDirtyTrackerTest {
+public class CompositeDirtyPropertyTest {
 
     @Test
-    public void multiDirtyTrackerTest() {
+    public void compositeDirtyPropertyTest() {
 
         CompositeDirtyProperty manager = new CompositeDirtyProperty();
 
