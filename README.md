@@ -23,7 +23,7 @@ Each of these dirty-tracking components have the same behaviors as their vanilla
 |Property/Method|Description|
 |----|----|
 |isDirtyProperty()|Read-only ObservableValue indicating whether this item is dirty|
-|isDirty|^^^|
+|isDirty|Delegates to isDirtyProperty()|
 |reset()|Sets the value back to the baseline value, removing dirty state|
 |rebaseline()|Sets the baseline value to the current value, resetting dirty state|
 
