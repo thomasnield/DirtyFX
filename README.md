@@ -31,7 +31,7 @@ Each of these dirty-tracking components have the same behaviors as their vanilla
 
 Note this was built in Kotlin, but works with both Java and Kotlin.
 
-### Example
+### Java Example
 
 ```java
 // Initialize with "Hello" being the baseline
