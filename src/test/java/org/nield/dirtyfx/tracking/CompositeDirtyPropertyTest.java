@@ -12,31 +12,31 @@ public class CompositeDirtyPropertyTest {
     @Test
     public void compositeDirtyPropertyTest() {
 
-        CompositeDirtyProperty manager = new CompositeDirtyProperty();
+        CompositeDirtyProperty composite = new CompositeDirtyProperty();
 
         DirtyObjectProperty<Integer> property1 = new DirtyObjectProperty<>(3);
         DirtyObjectProperty<Integer> property2 = new DirtyObjectProperty<>(2);
         DirtyObservableList<String> list1 = new DirtyObservableList<>(Arrays.asList("Alpha","Beta","Gamma"));
         DirtyObservableList<String> list2 = new DirtyObservableList<>(Arrays.asList("Zeta","Theta","Eta"));
 
-        manager.addAll(property1,property2,list1,list2);
-        Assert.assertFalse(manager.isDirty());
+        composite.addAll(property1,property2,list1,list2);
+        Assert.assertFalse(composite.isDirty());
 
         property1.setValue(3);
-        Assert.assertFalse(manager.isDirty());
+        Assert.assertFalse(composite.isDirty());
 
         property1.setValue(4);
-        Assert.assertTrue(manager.isDirty());
+        Assert.assertTrue(composite.isDirty());
 
-        manager.reset();
+        composite.reset();
         Assert.assertEquals(3, (int) property1.getValue());
-        Assert.assertFalse(manager.isDirty());
+        Assert.assertFalse(composite.isDirty());
 
         list1.add("Delta");
-        Assert.assertTrue(manager.isDirty());
+        Assert.assertTrue(composite.isDirty());
 
-        manager.rebaseline();
-        Assert.assertFalse(manager.isDirty());
+        composite.rebaseline();
+        Assert.assertFalse(composite.isDirty());
         Assert.assertArrayEquals(list1.toArray(), new String[] {"Alpha", "Beta", "Gamma", "Delta"});
     }
 }
