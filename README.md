@@ -31,7 +31,7 @@ Note this was built in Kotlin, but works with both Java and Kotlin.
 
 ### Example
 
-```kotlin
+```java
 // Initialize with "Hello" being the baseline
 DirtyObjectProperty<String> myProperty = new DirtyObjectProperty<>("Hello");
 
