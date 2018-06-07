@@ -1,7 +1,7 @@
 ![](logo.jpg)
 
 
-Dirty state tracking properties and collections for JavaFX.
+### Dirty state tracking properties and collections for JavaFX.
 
 I built this library out of tremendous need to keep track of dirty states in various JavaFX Properties and Collections, as well as rebaseline and reset against the dirty values.
 
