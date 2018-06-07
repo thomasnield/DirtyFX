@@ -55,7 +55,7 @@ Assert.assertEquals("World", myProperty.getValue());
 Assert.assertFalse(myProperty.isDirty());
 ```
 
-### Dependecies
+### Dependencies
 
 **Maven**
 
