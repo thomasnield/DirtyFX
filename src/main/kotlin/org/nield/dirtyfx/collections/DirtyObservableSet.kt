@@ -3,45 +3,46 @@ package org.nield.dirtyfx.collections
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
-import javafx.collections.ObservableSet
-import javafx.collections.SetChangeListener
-import javafx.collections.WeakSetChangeListener
+import javafx.collections.ListChangeListener
+import javafx.collections.ObservableList
+import javafx.collections.WeakListChangeListener
 import org.nield.dirtyfx.tracking.DirtyProperty
 
-class DirtyObservableSet<T> private constructor(originalSet: Set<T> = setOf(),
-                                                val currentSet: ObservableSet<T>): DirtyProperty, ObservableSet<T> by currentSet {
 
-    constructor(originalSet: Set<T>): this(originalSet, FXCollections.observableSet(HashSet<T>(originalSet)))
-    constructor(vararg items: T): this(items.toSet())
+class DirtyObservableList<T> private constructor(originalList: List<T> = listOf(),
+                                                  val currentList: ObservableList<T>):
+        ObservableList<T> by currentList, DirtyProperty {
 
-    private val originalSet = FXCollections.observableSet(HashSet<T>(originalSet))
+    constructor(originalList: List<T>): this(originalList,FXCollections.observableArrayList<T>(originalList))
+
+    private val originalList = FXCollections.observableArrayList(originalList)
     private val _isDirtyProperty = SimpleBooleanProperty()
 
+    /** Sets this `ObservableList` to now be the "original" list **/
+    override fun rebaseline() {
+        originalList.setAll(this)
+        _isDirtyProperty.set(false)
+    }
+    /** Resets this `ObservableList` to the "original" list **/
+    override fun reset() {
+        setAll(originalList)
+        _isDirtyProperty.set(false)
+    }
     init {
         addListener(
-                WeakSetChangeListener<T>(
-                        SetChangeListener<T> {
-                            _isDirtyProperty.set(originalSet != this)
+                WeakListChangeListener<T> (
+                        ListChangeListener<T> { _ ->
+                            _isDirtyProperty.set(originalList != this)
                         }
                 )
         )
     }
 
-    override fun rebaseline() {
-        originalSet.clear()
-        originalSet.addAll(this)
-        _isDirtyProperty.set(false)
-    }
-    override fun reset() {
-        clear()
-        addAll(originalSet)
-        _isDirtyProperty.set(false)
-    }
+    val baselineList get() = FXCollections.unmodifiableObservableList(originalList)
+    
     override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
-    val baselineSet get() = FXCollections.unmodifiableObservableSet(originalSet)
-
-    override fun equals(other: Any?) = currentSet == other
-    override fun hashCode() = currentSet.hashCode()
+    override fun hashCode() = currentList.hashCode()
+    override fun equals(other: Any?) = currentList == other
 }
