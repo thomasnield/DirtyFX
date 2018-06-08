@@ -33,7 +33,7 @@ class DirtyObservableList<T> private constructor(_originalList: List<T> = listOf
         addListener(
                 WeakListChangeListener<T> (
                         ListChangeListener<T> { _ ->
-                            _isDirtyProperty.set(originalList != this)
+                            _isDirtyProperty.set(_originalList != this)
                         }
                 )
         )
