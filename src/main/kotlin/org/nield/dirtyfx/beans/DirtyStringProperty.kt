@@ -11,7 +11,7 @@ import org.nield.dirtyfx.tracking.DirtyProperty
 
 class DirtyStringProperty(initialValue: String): StringProperty(), DirtyProperty {
 
-    private var originalValue = initialValue
+    private val _originalValueProperty = SimpleStringProperty(initialValue)
     private val _isDirtyProperty = SimpleBooleanProperty(false)
 
     private val delegate = SimpleStringProperty(initialValue)
@@ -19,22 +19,27 @@ class DirtyStringProperty(initialValue: String): StringProperty(), DirtyProperty
     init {
         addListener(
                 WeakChangeListener<String> (
-                    ChangeListener<String> { _,_,_ ->
-                        _isDirtyProperty.set(originalValue != value)
-                    }
+                        ChangeListener<String> { _,_,_ ->
+                            _isDirtyProperty.set(_originalValueProperty.get() != value)
+                        }
                 )
         )
     }
+
+    fun originalValueProperty(): ObservableValue<String> = _originalValueProperty
+    val originalValue get() = _originalValueProperty.get()
+
     /** Sets the current value to now be the "original" value **/
     override fun rebaseline() {
-        originalValue = value
+        _originalValueProperty.set(value)
         _isDirtyProperty.set(false)
     }
     /** Resets the current value to the "original" value **/
     override fun reset() {
-        value = originalValue
+        value = _originalValueProperty.get()
         _isDirtyProperty.set(false)
     }
+
     override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
