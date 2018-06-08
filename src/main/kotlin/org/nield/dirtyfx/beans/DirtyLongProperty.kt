@@ -3,13 +3,14 @@ package org.nield.dirtyfx.beans
 import javafx.beans.InvalidationListener
 import javafx.beans.property.*
 import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableLongValue
 import javafx.beans.value.ObservableValue
 import javafx.beans.value.WeakChangeListener
 import org.nield.dirtyfx.tracking.DirtyProperty
 
 class DirtyLongProperty(initialValue: Long): LongProperty(), DirtyProperty {
 
-    private var originalValue = initialValue
+    private val _originalValueProperty = SimpleLongProperty(initialValue)
     private val _isDirtyProperty = SimpleBooleanProperty(false)
 
     private val delegate = SimpleLongProperty(initialValue)
@@ -17,20 +18,24 @@ class DirtyLongProperty(initialValue: Long): LongProperty(), DirtyProperty {
     init {
         addListener(
                 WeakChangeListener<Number> (
-                    ChangeListener<Number> { _,_,_ ->
-                        _isDirtyProperty.set(originalValue != value)
-                    }
+                        ChangeListener<Number> { _,_,_ ->
+                            _isDirtyProperty.set(_originalValueProperty.get() != value)
+                        }
                 )
         )
     }
+
+    fun originalValueProperty(): ObservableLongValue = _originalValueProperty
+    val originalValue get() = _originalValueProperty.get()
+
     /** Sets the current value to now be the "original" value **/
     override fun rebaseline() {
-        originalValue = value
+        _originalValueProperty.set(value)
         _isDirtyProperty.set(false)
     }
     /** Resets the current value to the "original" value **/
     override fun reset() {
-        value = originalValue
+        value = _originalValueProperty.get()
         _isDirtyProperty.set(false)
     }
     override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
