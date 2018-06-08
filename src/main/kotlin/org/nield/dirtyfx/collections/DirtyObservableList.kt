@@ -12,7 +12,8 @@ class DirtyObservableList<T> private constructor(originalList: List<T> = listOf(
         ObservableList<T> by currentList, DirtyProperty {
 
     constructor(originalList: List<T>): this(originalList,FXCollections.observableArrayList<T>(originalList))
-
+    constructor(vararg items: T):  this(items.toList())
+          
     private val originalList = FXCollections.observableArrayList(originalList)
     private val _isDirtyProperty = SimpleBooleanProperty()
 
