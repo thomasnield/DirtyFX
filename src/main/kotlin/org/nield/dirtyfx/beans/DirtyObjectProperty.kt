@@ -1,5 +1,6 @@
 package org.nield.dirtyfx.beans
 
+
 import javafx.beans.property.Property
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -9,26 +10,30 @@ import javafx.beans.value.WeakChangeListener
 import org.nield.dirtyfx.tracking.DirtyProperty
 
 class DirtyObjectProperty<T>(initialValue: T): Property<T> by SimpleObjectProperty(initialValue), DirtyProperty {
-    private var originalValue = initialValue
+    private val _originalValueProperty = SimpleObjectProperty(initialValue)
     private val _isDirtyProperty = SimpleBooleanProperty(false)
 
     init {
         addListener(
                 WeakChangeListener<T> (
-                    ChangeListener<T> { _,_,_ ->
-                        _isDirtyProperty.set(originalValue != value)
-                    }
+                        ChangeListener<T> { _,_,_ ->
+                            _isDirtyProperty.set(_originalValueProperty.get() != value)
+                        }
                 )
         )
     }
+    
+    fun originalValueProperty(): ObservableValue<T> = _originalValueProperty
+    val originalValue get() = _originalValueProperty.get()
+
     /** Sets the current value to now be the "original" value **/
     override fun rebaseline() {
-        originalValue = value
+        _originalValueProperty.set(value)
         _isDirtyProperty.set(false)
     }
     /** Resets the current value to the "original" value **/
     override fun reset() {
-        value = originalValue
+        value = _originalValueProperty.get()
         _isDirtyProperty.set(false)
     }
     override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
