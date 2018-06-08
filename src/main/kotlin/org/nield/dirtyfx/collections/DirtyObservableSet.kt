@@ -9,37 +9,37 @@ import javafx.collections.WeakListChangeListener
 import org.nield.dirtyfx.tracking.DirtyProperty
 
 
-class DirtyObservableList<T> private constructor(originalList: List<T> = listOf(),
-                                                  val currentList: ObservableList<T>):
+class DirtyObservableList<T> private constructor(_originalList: List<T> = listOf(),
+                                                 val currentList: ObservableList<T>):
         ObservableList<T> by currentList, DirtyProperty {
 
     constructor(originalList: List<T>): this(originalList,FXCollections.observableArrayList<T>(originalList))
 
-    private val originalList = FXCollections.observableArrayList(originalList)
+    private val _originalList = FXCollections.observableArrayList(_originalList)
     private val _isDirtyProperty = SimpleBooleanProperty()
 
     /** Sets this `ObservableList` to now be the "original" list **/
     override fun rebaseline() {
-        originalList.setAll(this)
+        _originalList.setAll(this)
         _isDirtyProperty.set(false)
     }
     /** Resets this `ObservableList` to the "original" list **/
     override fun reset() {
-        setAll(originalList)
+        setAll(_originalList)
         _isDirtyProperty.set(false)
     }
     init {
         addListener(
                 WeakListChangeListener<T> (
                         ListChangeListener<T> { _ ->
-                            _isDirtyProperty.set(originalList != this)
+                            _isDirtyProperty.set(_originalList != this)
                         }
                 )
         )
     }
 
-    val baselineList get() = FXCollections.unmodifiableObservableList(originalList)
-    
+    val originalList get() = FXCollections.unmodifiableObservableList(_originalList)
+
     override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
