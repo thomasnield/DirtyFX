@@ -21,12 +21,12 @@ class DirtyObservableList<T> private constructor(_originalList: List<T> = listOf
 
     /** Sets this `ObservableList` to now be the "original" list **/
     override fun rebaseline() {
-        originalList.setAll(this)
+        _originalList.setAll(this)
         _isDirtyProperty.set(false)
     }
     /** Resets this `ObservableList` to the "original" list **/
     override fun reset() {
-        setAll(originalList)
+        setAll(_originalList)
         _isDirtyProperty.set(false)
     }
     init {

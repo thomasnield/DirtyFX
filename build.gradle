@@ -55,7 +55,7 @@ signing {
 
 group = "org.nield"
 archivesBaseName = "dirtyfx"
-version = "0.0.3"
+version = "0.1.0"
 
 uploadArchives {
     repositories {
