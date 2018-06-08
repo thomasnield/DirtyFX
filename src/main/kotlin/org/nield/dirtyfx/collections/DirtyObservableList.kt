@@ -1,4 +1,6 @@
 package org.nield.dirtyfx.collections
+
+
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
@@ -7,14 +9,14 @@ import javafx.collections.ObservableList
 import javafx.collections.WeakListChangeListener
 import org.nield.dirtyfx.tracking.DirtyProperty
 
-class DirtyObservableList<T> private constructor(originalList: List<T> = listOf(),
-                                                  val currentList: ObservableList<T>):
+class DirtyObservableList<T> private constructor(_originalList: List<T> = listOf(),
+                                                 val currentList: ObservableList<T>):
         ObservableList<T> by currentList, DirtyProperty {
 
     constructor(originalList: List<T>): this(originalList,FXCollections.observableArrayList<T>(originalList))
     constructor(vararg items: T):  this(items.toList())
-          
-    private val originalList = FXCollections.observableArrayList(originalList)
+
+    private val _originalList = FXCollections.observableArrayList(_originalList)
     private val _isDirtyProperty = SimpleBooleanProperty()
 
     /** Sets this `ObservableList` to now be the "original" list **/
@@ -37,7 +39,7 @@ class DirtyObservableList<T> private constructor(originalList: List<T> = listOf(
         )
     }
 
-    val baselineList get() = FXCollections.unmodifiableObservableList(originalList)
+    val originalList get() = FXCollections.unmodifiableObservableList(_originalList)
 
     override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
