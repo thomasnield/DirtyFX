@@ -15,13 +15,11 @@ class CompositeDirtyProperty: DirtyProperty, ObservableValue<Boolean> {
 
     init {
         items.addListener(
-                WeakListChangeListener<DirtyProperty> (
-                        ListChangeListener<DirtyProperty> { _ ->
-                            _dirtyStateProperty.set(
-                                    items.any { it.isDirty }
-                            )
-                        }
+            ListChangeListener<DirtyProperty> { _ ->
+                _dirtyStateProperty.set(
+                        items.any { it.isDirty }
                 )
+            }
         )
     }
 
