@@ -15,12 +15,12 @@ class DirtyIntegerProperty(initialValue: Int): IntegerProperty(), DirtyProperty{
 
     private val delegate = SimpleIntegerProperty(initialValue)
 
+    private val listener = ChangeListener<Number> { _,_,_ ->
+        _isDirtyProperty.set(_originalValueProperty.get() != value)
+    }
+    
     init {
-        addListener(
-                ChangeListener<Number> { _,_,_ ->
-                    _isDirtyProperty.set(_originalValueProperty.get() != value)
-                }
-        )
+        addListener(WeakChangeListener(listener))
     }
 
     fun originalValueProperty(): ObservableIntegerValue = _originalValueProperty
