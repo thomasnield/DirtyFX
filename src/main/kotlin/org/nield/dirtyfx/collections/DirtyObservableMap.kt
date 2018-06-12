@@ -29,11 +29,9 @@ class DirtyObservableMap<K,V> private constructor(_originalMap: Map<K,V>,
     }
     init {
         addListener(
-                WeakMapChangeListener<K,V>(
-                        MapChangeListener<K,V> {
-                            _isDirtyProperty.set(_originalMap != this)
-                        }
-                )
+                MapChangeListener<K,V> {
+                    _isDirtyProperty.set(_originalMap != this)
+                }
         )
     }
     val originalMap get() = FXCollections.unmodifiableObservableMap(_originalMap)
