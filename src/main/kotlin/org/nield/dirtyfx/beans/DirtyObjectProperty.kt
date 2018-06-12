@@ -13,12 +13,12 @@ class DirtyObjectProperty<T>(initialValue: T): Property<T> by SimpleObjectProper
     private val _originalValueProperty = SimpleObjectProperty(initialValue)
     private val _isDirtyProperty = SimpleBooleanProperty(false)
 
+    private val listener = ChangeListener<T> { _,_,_ ->
+        _isDirtyProperty.set(_originalValueProperty.get() != value)
+    }
+    
     init {
-        addListener(
-                ChangeListener<T> { _,_,_ ->
-                    _isDirtyProperty.set(_originalValueProperty.get() != value)
-                }
-        )
+        addListener(WeakChangeListener(listener))
     }
     
     fun originalValueProperty(): ObservableValue<T> = _originalValueProperty
