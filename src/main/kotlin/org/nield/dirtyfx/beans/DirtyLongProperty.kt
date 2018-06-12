@@ -17,14 +17,13 @@ class DirtyLongProperty(initialValue: Long): LongProperty(), DirtyProperty {
 
     init {
         addListener(
-                WeakChangeListener<Number> (
-                        ChangeListener<Number> { _,_,_ ->
-                            _isDirtyProperty.set(_originalValueProperty.get() != value)
-                        }
-                )
+                ChangeListener<Number> { _,_,_ ->
+                    _isDirtyProperty.set(_originalValueProperty.get() != value)
+                }
         )
     }
-
+    
+    
     fun originalValueProperty(): ObservableLongValue = _originalValueProperty
     val originalValue get() = _originalValueProperty.get()
 
