@@ -16,12 +16,11 @@ class DirtyBooleanProperty(initialValue: Boolean): BooleanProperty(), DirtyPrope
 
     private val delegate = SimpleBooleanProperty(initialValue)
 
+    private val listener = ChangeListener<Boolean> { _, _, _ ->
+        _isDirtyProperty.set(_originalValueProperty.get() != value)
+    }
     init {
-        addListener(
-                ChangeListener<Boolean> { _, _, _ ->
-                    _isDirtyProperty.set(_originalValueProperty.get() != value)
-                }
-        )
+        addListener(WeakChangeListener(listener))
     }
 
     /** Sets the current value to now be the "original" value **/
