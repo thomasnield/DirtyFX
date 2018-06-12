@@ -18,14 +18,12 @@ class DirtyStringProperty(initialValue: String): StringProperty(), DirtyProperty
 
     init {
         addListener(
-                WeakChangeListener<String> (
-                        ChangeListener<String> { _,_,_ ->
-                            _isDirtyProperty.set(_originalValueProperty.get() != value)
-                        }
-                )
+                ChangeListener<Number> { _,_,_ ->
+                    _isDirtyProperty.set(_originalValueProperty.get() != value)
+                }
         )
     }
-
+    
     fun originalValueProperty(): ObservableValue<String> = _originalValueProperty
     val originalValue get() = _originalValueProperty.get()
 
