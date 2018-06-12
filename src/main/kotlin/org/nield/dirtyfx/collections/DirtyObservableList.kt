@@ -29,13 +29,12 @@ class DirtyObservableList<T> private constructor(_originalList: List<T> = listOf
         setAll(_originalList)
         _isDirtyProperty.set(false)
     }
+          
     init {
         addListener(
-                WeakListChangeListener<T> (
-                        ListChangeListener<T> { _ ->
-                            _isDirtyProperty.set(_originalList != this)
-                        }
-                )
+                ListChangeListener<T> { _ ->
+                    _isDirtyProperty.set(_originalList != this)
+                }
         )
     }
 
