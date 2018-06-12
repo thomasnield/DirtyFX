@@ -18,11 +18,9 @@ class DirtyBooleanProperty(initialValue: Boolean): BooleanProperty(), DirtyPrope
 
     init {
         addListener(
-                WeakChangeListener<Boolean>(
-                        ChangeListener<Boolean> { _, _, _ ->
-                            _isDirtyProperty.set(_originalValueProperty.get() != value)
-                        }
-                )
+                ChangeListener<Boolean> { _, _, _ ->
+                    _isDirtyProperty.set(_originalValueProperty.get() != value)
+                }
         )
     }
 
