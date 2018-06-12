@@ -17,11 +17,9 @@ class DirtyIntegerProperty(initialValue: Int): IntegerProperty(), DirtyProperty{
 
     init {
         addListener(
-                WeakChangeListener<Number> (
-                        ChangeListener<Number> { _,_,_ ->
-                            _isDirtyProperty.set(_originalValueProperty.get() != value)
-                        }
-                )
+                ChangeListener<Number> { _,_,_ ->
+                    _isDirtyProperty.set(_originalValueProperty.get() != value)
+                }
         )
     }
 
