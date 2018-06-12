@@ -15,11 +15,9 @@ class DirtyObjectProperty<T>(initialValue: T): Property<T> by SimpleObjectProper
 
     init {
         addListener(
-                WeakChangeListener<T> (
-                        ChangeListener<T> { _,_,_ ->
-                            _isDirtyProperty.set(_originalValueProperty.get() != value)
-                        }
-                )
+                ChangeListener<Number> { _,_,_ ->
+                    _isDirtyProperty.set(_originalValueProperty.get() != value)
+                }
         )
     }
     
