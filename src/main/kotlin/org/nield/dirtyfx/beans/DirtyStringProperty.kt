@@ -18,7 +18,7 @@ class DirtyStringProperty(initialValue: String): StringProperty(), DirtyProperty
 
     init {
         addListener(
-                ChangeListener<Number> { _,_,_ ->
+                ChangeListener<String> { _,_,_ ->
                     _isDirtyProperty.set(_originalValueProperty.get() != value)
                 }
         )
