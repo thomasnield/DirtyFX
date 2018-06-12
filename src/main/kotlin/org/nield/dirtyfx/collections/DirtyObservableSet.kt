@@ -19,11 +19,9 @@ class DirtyObservableSet<T> private constructor(_originalSet: Set<T> = setOf(),
 
     init {
         addListener(
-                WeakSetChangeListener<T>(
-                        SetChangeListener<T> {
-                            _isDirtyProperty.set(_originalSet != this)
-                        }
-                )
+                SetChangeListener<T> {
+                    _isDirtyProperty.set(_originalSet != this)
+                }
         )
     }
 
