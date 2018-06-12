@@ -16,12 +16,12 @@ class DirtyStringProperty(initialValue: String): StringProperty(), DirtyProperty
 
     private val delegate = SimpleStringProperty(initialValue)
 
+    private val listener = ChangeListener<String> { _,_,_ ->
+        _isDirtyProperty.set(_originalValueProperty.get() != value)
+    }
+    
     init {
-        addListener(
-                ChangeListener<String> { _,_,_ ->
-                    _isDirtyProperty.set(_originalValueProperty.get() != value)
-                }
-        )
+        addListener(WeakChangeListener(listener))
     }
     
     fun originalValueProperty(): ObservableValue<String> = _originalValueProperty
