@@ -13,14 +13,14 @@ class CompositeDirtyProperty: DirtyProperty, ObservableValue<Boolean> {
     private val items = FXCollections.observableArrayList<DirtyProperty> { arrayOf(it.isDirtyProperty()) }
     private val _dirtyStateProperty = SimpleBooleanProperty()
 
-    init {
-        items.addListener(
-            ListChangeListener<DirtyProperty> { _ ->
-                _dirtyStateProperty.set(
-                        items.any { it.isDirty }
-                )
-            }
+    private val listener = ListChangeListener<DirtyProperty> { _ ->
+        _dirtyStateProperty.set(
+                items.any { it.isDirty }
         )
+    }
+
+    init {
+        items.addListener(WeakListChangeListener(listener))
     }
 
     /**

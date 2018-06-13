@@ -15,7 +15,15 @@ class DirtyObservableMap<K,V> private constructor(_originalMap: Map<K,V>,
     private val _originalMap = FXCollections.observableMap(_originalMap)
     private val _isDirtyProperty = SimpleBooleanProperty()
 
+    private val listener = MapChangeListener<K,V> {
+        _isDirtyProperty.set(_originalMap != this)
+    }
+
     constructor(originalMap: Map<K,V> = mapOf()): this(originalMap, FXCollections.observableMap(HashMap<K,V>(originalMap)))
+
+    init {
+        addListener(WeakMapChangeListener(listener))
+    }
 
     override fun rebaseline() {
         _originalMap.clear()
@@ -27,13 +35,7 @@ class DirtyObservableMap<K,V> private constructor(_originalMap: Map<K,V>,
         _originalMap.forEach { k, v -> set(k,v) }
         _isDirtyProperty.set(false)
     }
-    init {
-        addListener(
-                MapChangeListener<K,V> {
-                    _isDirtyProperty.set(_originalMap != this)
-                }
-        )
-    }
+
     val originalMap get() = FXCollections.unmodifiableObservableMap(_originalMap)
 
     override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty

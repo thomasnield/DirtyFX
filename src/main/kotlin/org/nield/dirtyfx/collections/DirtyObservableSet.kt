@@ -2,6 +2,7 @@ package org.nield.dirtyfx.collections
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ObservableValue
+import javafx.beans.value.WeakChangeListener
 import javafx.collections.FXCollections
 import javafx.collections.ObservableSet
 import javafx.collections.SetChangeListener
@@ -17,12 +18,12 @@ class DirtyObservableSet<T> private constructor(_originalSet: Set<T> = setOf(),
     private val _originalSet = FXCollections.observableSet(HashSet<T>(_originalSet))
     private val _isDirtyProperty = SimpleBooleanProperty()
 
+    private val listener = SetChangeListener<T> {
+        _isDirtyProperty.set(_originalSet != this)
+    }
+
     init {
-        addListener(
-                SetChangeListener<T> {
-                    _isDirtyProperty.set(_originalSet != this)
-                }
-        )
+        addListener(WeakSetChangeListener(listener))
     }
 
     override fun rebaseline() {

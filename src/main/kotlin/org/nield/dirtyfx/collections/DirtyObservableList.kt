@@ -19,6 +19,15 @@ class DirtyObservableList<T> private constructor(_originalList: List<T> = listOf
     private val _originalList = FXCollections.observableArrayList(_originalList)
     private val _isDirtyProperty = SimpleBooleanProperty()
 
+
+    private val listener = ListChangeListener<T> { _ ->
+        _isDirtyProperty.set(_originalList != this)
+    }
+    init {
+        addListener(WeakListChangeListener(listener))
+    }
+
+
     /** Sets this `ObservableList` to now be the "original" list **/
     override fun rebaseline() {
         _originalList.setAll(this)
@@ -30,13 +39,6 @@ class DirtyObservableList<T> private constructor(_originalList: List<T> = listOf
         _isDirtyProperty.set(false)
     }
           
-    init {
-        addListener(
-                ListChangeListener<T> { _ ->
-                    _isDirtyProperty.set(_originalList != this)
-                }
-        )
-    }
 
     val originalList get() = FXCollections.unmodifiableObservableList(_originalList)
 
