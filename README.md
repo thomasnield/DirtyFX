@@ -17,6 +17,10 @@ DirtyStringProperty
 DirtyObservableList
 DirtyObservableMap
 DirtyObservableSet
+DirtyListProperty
+DirtySetProperty
+DirtyMapProperty
+DirtyReadOnlyWrapper
 CompositeDirtyProperty
 ```
 
