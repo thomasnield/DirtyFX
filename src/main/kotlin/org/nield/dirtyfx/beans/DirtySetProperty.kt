@@ -10,13 +10,13 @@ import javafx.collections.ObservableSet
 import javafx.collections.SetChangeListener
 import org.nield.dirtyfx.tracking.DirtyProperty
 
-class DirtySetProperty<T> constructor(originalSet: Set<T> = setOf()): DirtyProperty, SetProperty<T>() {
+class DirtySetProperty<T> constructor(originalSet: Set<T> = mutableSetOf()): DirtyProperty, SetProperty<T>() {
 
     constructor(vararg items: T):  this(items.toSet())
 
-    private val _originalSet = FXCollections.observableSet(originalSet.toSet())
+    private val _originalSet = FXCollections.observableSet(originalSet.toMutableSet())
     private val _isDirtyProperty = SimpleBooleanProperty()
-    private val backingSet = SimpleSetProperty(FXCollections.observableSet(originalSet.toSet()))
+    private val backingSet = SimpleSetProperty(FXCollections.observableSet(originalSet.toMutableSet()))
 
     private val listener = ChangeListener<Set<T>> { _,_,_ ->
         _isDirtyProperty.set(_originalSet != this)
