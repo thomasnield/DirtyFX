@@ -103,12 +103,12 @@ Assert.assertArrayEquals(list1.toArray(), new String[] {"Alpha", "Beta", "Gamma"
 <dependency>
     <groupId>org.nield</groupId>
     <artifactId>dirtyfx</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 </dependency>
 ```
 
 **Gradle**
 
 ```groovy
-compile 'org.nield:dirtyfx:0.1.1'
+compile 'org.nield:dirtyfx:0.1.2'
 ```
