@@ -10,9 +10,11 @@ import javafx.collections.ObservableSet
 import javafx.collections.SetChangeListener
 import org.nield.dirtyfx.tracking.DirtyProperty
 
+
+
 class DirtySetProperty<T> constructor(originalSet: Set<T> = mutableSetOf()): DirtyProperty, SetProperty<T>() {
 
-    constructor(vararg items: T):  this(items.toSet())
+    constructor(vararg items: T):  this(items.toMutableSet())
 
     private val _originalSet = FXCollections.observableSet(originalSet.toMutableSet())
     private val _isDirtyProperty = SimpleBooleanProperty()
@@ -79,3 +81,4 @@ class DirtySetProperty<T> constructor(originalSet: Set<T> = mutableSetOf()): Dir
 
     override fun isBound() = backingSet.isBound
 }
+
