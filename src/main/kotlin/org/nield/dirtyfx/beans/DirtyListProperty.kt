@@ -10,9 +10,9 @@ import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import org.nield.dirtyfx.tracking.DirtyProperty
 
-class DirtyListProperty<T> constructor(originalList: List<T> = listOf()): DirtyProperty, ListProperty<T>() {
+class DirtyListProperty<T> constructor(originalList: List<T> = mutableListOf()): DirtyProperty, ListProperty<T>() {
 
-    constructor(vararg items: T):  this(items.toList())
+    constructor(vararg items: T):  this(items.toMutableList())
 
     private val _originalList = FXCollections.observableArrayList(originalList)
     private val _isDirtyProperty = SimpleBooleanProperty()
