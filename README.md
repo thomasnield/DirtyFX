@@ -102,6 +102,8 @@ Assert.assertArrayEquals(list1.toArray(), new String[] {"Alpha", "Beta", "Gamma"
 
 ### USE CASE - CRUD Operations with TornadoFX
 
+Here is a simple CRUD-like user interface built with Kotlin and [TornadoFX](https://github.com/edvin/tornadofx). 
+
 ![](dirty_demo.gif)
 
 ```kotlin 
