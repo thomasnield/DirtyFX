@@ -7,6 +7,7 @@ I built this library out of tremendous need to keep track of dirty states in var
 
 You may likely use this library for CRUD operations, while allowing users the ability to review dirty edits before commiting or reverting them. For instance, you can bind the dirty states to red text formatting [like in this demo application](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo). 
 
+![](dirty_demo.gif)
 
 Here are the current types:
 
@@ -36,6 +37,7 @@ Each of these dirty-tracking components have the same behaviors as their vanilla
 |rebaseline()|Sets the baseline value to the current value, resetting dirty state|
 
 Note this was built in Kotlin, but works with both Java and Kotlin.
+
 
 ### Java Example
 
@@ -95,6 +97,114 @@ Assert.assertTrue(composite.isDirty());
 composite.rebaseline();
 Assert.assertFalse(composite.isDirty());
 Assert.assertArrayEquals(list1.toArray(), new String[] {"Alpha", "Beta", "Gamma", "Delta"});
+```
+
+
+### USE CASE - CRUD Operations with TornadoFX
+
+![](dirty_demo.gif)
+
+```kotlin 
+import javafx.application.Application
+import javafx.beans.property.SimpleObjectProperty
+import javafx.collections.FXCollections
+import javafx.geometry.Orientation
+import javafx.scene.paint.Color
+import org.nield.dirtyfx.beans.DirtyObjectProperty
+import org.nield.dirtyfx.beans.DirtyStringProperty
+import org.nield.dirtyfx.extensions.addTo
+import org.nield.dirtyfx.tracking.CompositeDirtyProperty
+import tornadofx.*
+import java.time.LocalDate
+
+
+fun main(args: Array<String>) {
+    Application.launch(MyApp::class.java, *args)
+}
+
+class MyApp: App(MyView::class)
+
+class MyView: View() {
+
+    val customers = FXCollections.observableArrayList(
+            Person("Samantha","Stuart",LocalDate.of(1981,12,4)),
+            Person("Tom","Marks",LocalDate.of(2001,1,23)),
+            Person("Stuart","Gills",LocalDate.of(1989,5,23)),
+            Person("Nicole","Williams",LocalDate.of(1998,8,11))
+    )
+
+    val selectedCustomer = SimpleObjectProperty<Person>()
+
+    override val root = borderpane {
+        
+        left = toolbar {
+            orientation = Orientation.VERTICAL
+
+            button("RESET") {
+                setOnAction {
+                    selectedCustomer.get()?.reset()
+                }
+            }
+
+            button("SAVE") {
+                setOnAction {
+                    selectedCustomer.get()?.save()
+                }
+            }
+        }
+
+        center = tableview(customers) {
+
+            selectedCustomer.bind(selectionModel.selectedItemProperty())
+
+            column("FIRST NAME", Person::firstNameProperty) {
+                makeEditable()
+                cellDecorator {
+                    rowItem.firstNameProperty.isDirtyProperty().addListener { o, oldValue, newValue ->
+                        textFill = if (newValue) Color.RED else Color.BLACK
+                    }
+                }
+            }
+
+            column("LAST NAME", Person::lastNameProperty) {
+                makeEditable()
+                cellDecorator {
+                    rowItem.lastNameProperty.isDirtyProperty().addListener { o, oldValue, newValue ->
+                        textFill = if (newValue) Color.RED else Color.BLACK
+                    }
+                }
+            }
+
+            column("BIRTHDAY", Person::birthdayProperty) {
+                makeEditable()
+                cellDecorator {
+                    rowItem.birthdayProperty.isDirtyProperty().addListener { o, oldValue, newValue ->
+                        textFill = if (newValue) Color.RED else Color.BLACK
+                    }
+                }
+            }
+            isEditable = true
+        }
+    }
+}
+
+class Person(firstName: String, lastName: String, birthday: LocalDate) {
+
+    val dirtyStates = CompositeDirtyProperty()
+
+    val firstNameProperty = DirtyStringProperty(firstName).addTo(dirtyStates)
+    var firstName by firstNameProperty
+
+    val lastNameProperty = DirtyStringProperty(lastName).addTo(dirtyStates)
+    var lastName by lastNameProperty
+
+    val birthdayProperty = DirtyObjectProperty(birthday).addTo(dirtyStates)
+    var birthday by birthdayProperty
+
+
+    fun reset() = dirtyStates.reset()
+    fun save() = dirtyStates.rebaseline()
+}
 ```
 
 ### Dependencies
