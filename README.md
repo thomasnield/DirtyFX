@@ -5,7 +5,7 @@
 
 I built this library out of tremendous need to keep track of dirty states in various JavaFX Properties and Collections, as well as rebaseline and reset against the dirty values. 
 
-You would likely use this library for CRUD operations, while allowing users the ability to review dirty edits before commiting them. For instance, you can bind the dirty states to red text formatting [like in this demo application](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo). 
+You may likely use this library for CRUD operations, while allowing users the ability to review dirty edits before commiting or reverting them. For instance, you can bind the dirty states to red text formatting [like in this demo application](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo). 
 
 
 Here are the current types:
