@@ -138,7 +138,7 @@ class MyView: View() {
     val selectedCustomer = SimpleObjectProperty<Person>()
 
     override val root = borderpane {
-        
+
         left = toolbar {
             orientation = Orientation.VERTICAL
 
@@ -185,6 +185,9 @@ class MyView: View() {
                     }
                 }
             }
+
+            column("IS DIRTY", Person::isDirtyProperty)
+
             isEditable = true
         }
     }
@@ -192,20 +195,21 @@ class MyView: View() {
 
 class Person(firstName: String, lastName: String, birthday: LocalDate) {
 
-    val dirtyStates = CompositeDirtyProperty()
+    val isDirtyProperty = CompositeDirtyProperty()
+    val isDirty by isDirtyProperty
 
-    val firstNameProperty = DirtyStringProperty(firstName).addTo(dirtyStates)
+    val firstNameProperty = DirtyStringProperty(firstName).addTo(isDirtyProperty)
     var firstName by firstNameProperty
 
-    val lastNameProperty = DirtyStringProperty(lastName).addTo(dirtyStates)
+    val lastNameProperty = DirtyStringProperty(lastName).addTo(isDirtyProperty)
     var lastName by lastNameProperty
 
-    val birthdayProperty = DirtyObjectProperty(birthday).addTo(dirtyStates)
+    val birthdayProperty = DirtyObjectProperty(birthday).addTo(isDirtyProperty)
     var birthday by birthdayProperty
 
 
-    fun reset() = dirtyStates.reset()
-    fun save() = dirtyStates.rebaseline()
+    fun reset() = isDirtyProperty.reset()
+    fun save() = isDirtyProperty.rebaseline()
 }
 ```
 
