@@ -39,7 +39,7 @@ Each of these dirty-tracking components have the same behaviors as their vanilla
 Note this was built in Kotlin, but works with both Java and Kotlin.
 
 
-### Java Example
+### Java Usage
 
 ```java
 // Initialize with "Hello" being the baseline
@@ -100,7 +100,7 @@ Assert.assertArrayEquals(list1.toArray(), new String[] {"Alpha", "Beta", "Gamma"
 ```
 
 
-### USE CASE - CRUD Operations with TornadoFX
+### Context Example - CRUD Interface
 
 Here is a simple CRUD-like user interface built with Kotlin and [TornadoFX](https://github.com/edvin/tornadofx). 
 
