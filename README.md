@@ -100,7 +100,7 @@ Assert.assertArrayEquals(list1.toArray(), new String[] {"Alpha", "Beta", "Gamma"
 ```
 
 
-### Context Example - CRUD Interface
+### Example - CRUD Interface
 
 Here is a simple CRUD-like user interface built with Kotlin and [TornadoFX](https://github.com/edvin/tornadofx). 
 
