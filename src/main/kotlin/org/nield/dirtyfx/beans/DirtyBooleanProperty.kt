@@ -36,7 +36,7 @@ class DirtyBooleanProperty(initialValue: Boolean): BooleanProperty(), DirtyPrope
         _isDirtyProperty.set(false)
     }
 
-    fun originalValueProperty(): ObservableValue<Boolean> = _originalValueProperty
+    fun originalValueProperty(): ReadOnlyBooleanProperty = _originalValueProperty
     val originalValue get() = _originalValueProperty.get()
 
     override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
