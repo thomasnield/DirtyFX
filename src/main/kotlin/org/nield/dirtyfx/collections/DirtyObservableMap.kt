@@ -1,7 +1,7 @@
 package org.nield.dirtyfx.collections
 
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
 import javafx.collections.MapChangeListener
 import javafx.collections.ObservableMap
@@ -38,7 +38,7 @@ class DirtyObservableMap<K,V> private constructor(_originalMap: Map<K,V>,
 
     val originalMap get() = FXCollections.unmodifiableObservableMap(_originalMap)
 
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     override fun hashCode() = currentMap.hashCode()

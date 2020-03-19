@@ -2,6 +2,7 @@ package org.nield.dirtyfx.beans
 
 
 import javafx.beans.property.Property
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.value.ChangeListener
@@ -34,6 +35,6 @@ class DirtyObjectProperty<T>(initialValue: T): Property<T> by SimpleObjectProper
         value = _originalValueProperty.get()
         _isDirtyProperty.set(false)
     }
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 }

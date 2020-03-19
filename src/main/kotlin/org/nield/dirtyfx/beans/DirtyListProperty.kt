@@ -41,7 +41,7 @@ class DirtyListProperty<T> constructor(originalList: List<T> = mutableListOf()):
 
     val originalList get() = FXCollections.unmodifiableObservableList(_originalList)
 
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     override fun hashCode() = backingList.hashCode()

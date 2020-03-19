@@ -1,14 +1,14 @@
 package org.nield.dirtyfx.tracking
 
 import javafx.beans.InvalidationListener
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ChangeListener
-import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
 import javafx.collections.ListChangeListener
 import javafx.collections.WeakListChangeListener
 
-class CompositeDirtyProperty: DirtyProperty, ObservableValue<Boolean> {
+class CompositeDirtyProperty: ReadOnlyBooleanProperty(), DirtyProperty {
 
     private val items = FXCollections.observableArrayList<DirtyProperty> { arrayOf(it.isDirtyProperty()) }
     private val _dirtyStateProperty = SimpleBooleanProperty()
@@ -26,7 +26,7 @@ class CompositeDirtyProperty: DirtyProperty, ObservableValue<Boolean> {
     /**
      * Indicates if any tracked DirtyProperties are dirty
      */
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _dirtyStateProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _dirtyStateProperty
 
     /**
      * Indicates if any tracked DirtyProperties are dirty
@@ -73,6 +73,12 @@ class CompositeDirtyProperty: DirtyProperty, ObservableValue<Boolean> {
     override fun addListener(listener: InvalidationListener?)  = _dirtyStateProperty.addListener(listener)
 
     override fun getValue() = _dirtyStateProperty.value
+
+    override fun get(): Boolean = _dirtyStateProperty.get()
+
+    override fun getName(): String = _dirtyStateProperty.name
+
+    override fun getBean(): Any = _dirtyStateProperty.bean
 
 
 }

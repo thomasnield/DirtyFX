@@ -45,7 +45,7 @@ class DirtySetProperty<T> constructor(originalSet: Set<T> = mutableSetOf()): Dir
 
     val originalSet get() = FXCollections.unmodifiableObservableSet(_originalSet)
 
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     override fun hashCode() = backingSet.hashCode()
