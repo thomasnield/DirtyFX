@@ -36,7 +36,7 @@ class DirtyLongProperty(initialValue: Long): LongProperty(), DirtyProperty {
         value = _originalValueProperty.get()
         _isDirtyProperty.set(false)
     }
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     override fun getName() = delegate.name

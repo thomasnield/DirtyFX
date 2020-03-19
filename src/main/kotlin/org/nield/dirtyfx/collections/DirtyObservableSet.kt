@@ -1,8 +1,7 @@
 package org.nield.dirtyfx.collections
 
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.value.ObservableValue
-import javafx.beans.value.WeakChangeListener
 import javafx.collections.FXCollections
 import javafx.collections.ObservableSet
 import javafx.collections.SetChangeListener
@@ -36,7 +35,7 @@ class DirtyObservableSet<T> private constructor(_originalSet: Set<T> = setOf(),
         addAll(_originalSet)
         _isDirtyProperty.set(false)
     }
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     val originalSet get() = FXCollections.unmodifiableObservableSet(_originalSet)

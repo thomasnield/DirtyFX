@@ -3,6 +3,7 @@ package org.nield.dirtyfx.beans
 
 import javafx.beans.InvalidationListener
 import javafx.beans.property.BooleanProperty
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
@@ -38,7 +39,7 @@ class DirtyBooleanProperty(initialValue: Boolean): BooleanProperty(), DirtyPrope
     fun originalValueProperty(): ObservableValue<Boolean> = _originalValueProperty
     val originalValue get() = _originalValueProperty.get()
 
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     override fun getName() = delegate.name

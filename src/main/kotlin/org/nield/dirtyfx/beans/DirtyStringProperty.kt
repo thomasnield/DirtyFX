@@ -1,6 +1,7 @@
 package org.nield.dirtyfx.beans
 
 import javafx.beans.InvalidationListener
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.StringProperty
 import javafx.beans.property.SimpleStringProperty
@@ -38,7 +39,7 @@ class DirtyStringProperty(initialValue: String): StringProperty(), DirtyProperty
         _isDirtyProperty.set(false)
     }
 
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     override fun getName() = delegate.name

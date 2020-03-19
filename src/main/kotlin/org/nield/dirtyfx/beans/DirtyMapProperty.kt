@@ -37,7 +37,7 @@ class DirtyMapProperty<K,V> constructor(originalMap: Map<K,V>): DirtyProperty, M
 
     val originalMap get() = FXCollections.unmodifiableObservableMap(_originalMap)
 
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _isDirtyProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _isDirtyProperty
     override val isDirty get() = _isDirtyProperty.get()
 
     override fun hashCode() = backingMap.hashCode()

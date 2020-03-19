@@ -1,6 +1,7 @@
 package org.nield.dirtyfx.tracking
 
 import javafx.beans.InvalidationListener
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
@@ -26,7 +27,7 @@ class CompositeDirtyProperty: DirtyProperty, ObservableValue<Boolean> {
     /**
      * Indicates if any tracked DirtyProperties are dirty
      */
-    override fun isDirtyProperty(): ObservableValue<Boolean> = _dirtyStateProperty
+    override fun isDirtyProperty(): ReadOnlyBooleanProperty = _dirtyStateProperty
 
     /**
      * Indicates if any tracked DirtyProperties are dirty
